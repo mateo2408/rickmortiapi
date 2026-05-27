@@ -1,34 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import CharacterCard from './CharacterCard'
 import './App.css'
 
+const API = 'https://rickandmortyapi.com/api/character'
+
+interface Character {
+  id: number;
+  name: string;
+  image: string;
+  status: string;
+  species: string;
+  location: {
+    name: string;
+  };
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [characters, setCharacters] = useState<Character[]>([])
+  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    fetch(API)
+      .then(res => res.json())
+      .then(data => {
+        setCharacters(data.results)
+        setLoading(false)
+      })
+  }, [])
+
+  const filtered = characters.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase())
+  )
+
+  if (loading) return <p>Cargando...</p>
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Rick & Morty</h1>
+        <input
+          placeholder="Buscar personaje..."
+          onChange={e => setSearch(e.target.value)}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <img src={reactLogo} className="logo" alt="React logo" />
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+      <div className="grid">
+        {filtered.map(char => (
+          <CharacterCard key={char.id} character={char} />
+        ))}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }

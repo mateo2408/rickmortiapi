@@ -34,7 +34,33 @@
 }
 
 .card {
-  padding: 2em;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 200px;
+}
+
+.card img{
+  width: 100%;
+}
+
+.info{
+  padding: 10px;
+}
+
+.alive{
+  color: #34D399
+}
+
+.dead{
+  color: #F87171;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill), minmax(200px, 1fr);
+  gap: 16px;
+  padding: 20px;
 }
 
 .read-the-docs {
