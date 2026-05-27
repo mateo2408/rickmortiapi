@@ -1,36 +1,32 @@
-interface CharacterCardProps {
-  character: {
-    image: string;
+interface Character {
+  id: number;
+  name: string;
+  image: string;
+  status: string;
+  species: string;
+  location: {
     name: string;
-    status: string;
-    species: string;
-    location: {
-      name: string;
-    };
   };
 }
-const CharacterCard = ({ character }: CharacterCardProps) => {
-  return(
-    <div className="card">
-      <img
-      src={character.image}
-      alt={character.name}>
-      </img>
-      <div className="info">
-        <h3>{character.name}</h3>
-        <p>
-          <span className={
-            character.status === 'Alive'
-            ? 'alive' : 'dead'
-          }></span>
-          {character.status} - {character.species}
-        </p>
-        <p>
-          {character.location.name}
-        </p>
-      </div>
-    </div>
-  )
+
+interface CharacterCardProps {
+  character: Character;
 }
 
-export default CharacterCard
+export default function CharacterCard({ character }: CharacterCardProps) {
+  const statusClass = character.status.toLowerCase();
+  
+  return (
+    <div className="card">
+      <img src={character.image} alt={character.name} />
+      <div className="info">
+        <h3>{character.name}</h3>
+        <p className={statusClass}>
+          <span className="status-dot"></span>
+          {character.status}
+        </p>
+        <p className="location-label">{character.location.name}</p>
+      </div>
+    </div>
+  );
+}
