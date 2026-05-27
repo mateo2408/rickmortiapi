@@ -14,16 +14,18 @@ interface CharacterCardProps {
 }
 
 export default function CharacterCard({ character }: CharacterCardProps) {
+  const statusClass = character.status.toLowerCase();
+  
   return (
     <div className="card">
       <img src={character.image} alt={character.name} />
       <div className="info">
         <h3>{character.name}</h3>
-        <p>
-          <span className={character.status === 'Alive' ? 'alive' : 'dead'}></span>
-          {character.status} - {character.species}
+        <p className={statusClass}>
+          <span className="status-dot"></span>
+          {character.status}
         </p>
-        <p>{character.location.name}</p>
+        <p className="location-label">{character.location.name}</p>
       </div>
     </div>
   );

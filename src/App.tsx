@@ -36,21 +36,24 @@ function App() {
   if (loading) return <p>Cargando...</p>
 
   return (
-    <>
-      <div>
+    <div className="App">
+      <header>
         <h1>Rick & Morty</h1>
-        <input
-          placeholder="Buscar personaje..."
-          onChange={e => setSearch(e.target.value)}
-        />
-      </div>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Buscar personaje..."
+            onChange={e => setSearch(e.target.value)}
+          />
+        </div>
+      </header>
 
-      <div className="grid">
+      <main className="grid">
         {filtered.map(char => (
           <CharacterCard key={char.id} character={char} />
         ))}
-      </div>
-    </>
+      </main>
+    </div>
   )
 }
 
